@@ -15,3 +15,7 @@ class Users(models.Model):  # extended user model
 class Doctor_data(models.Model):
     Users_D = ForeignKey(Users, on_delete=models.CASCADE)
     Degree = models.CharField(default='', max_length=50)
+
+
+class Symptoms(models.Model):
+    symptom_name = models.CharField(default="",max_length=500)
