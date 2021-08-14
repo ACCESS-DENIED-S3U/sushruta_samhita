@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style media="screen">
+
+    label {
+  display: flex;
+  justify-content: flex-end;
+  text-align: left;
+  width: 400px;
+  line-height: 26px;
+  margin-bottom: 10px;
+  }
+input {
+align-self:center;
+height: 20px;
+flex: 0 0 200px;
+margin-left: 10px;
+}
+  </style>
+</head>
+<body>
+  {%for msg in msg %}
+<h1>{{msg}}</h1>
+{%endfor%}
+  <form class="" action='{% url "reg" %}' method="post">
+    {% csrf_token %}
+    <label for="Rid">Reg ID:- <input type="text" name="Rid" value=""></label><br />
+    <div id="message"></div><br>
+    <label for="firstname">Firstname: - <input type="text" name="firstname" value=""></label><br />
+    <label for="lastname">Lastname: - <input type="text" name="lastname" value=""></label><br />
+    <label for="email">Email: - <input type="email" name="email" value=""></label><br />
+    <label for="phone">Phone Number: - <input name="phone" maxlength="10" pattern="\d{10}"  class="form-control" type="text" title="You can enter only 10 digits..."  required /></label><br>
+   
+    
+    <input type="radio" name="u_are" value="Patient" checked="checked">Student
+    <input type="radio" name="u are" value="Doctor">Teacher <br/><br>
+    
+
+
+    <label for="password">Password: - <input type="password" name="password" value="" id="pass"/></label><br>
+    <label for="confirm_password">Confirm Password: - <input type="password" name="confirm_password" value="" id="confpass"></label><br>
+    <div id="msg"></div><br>
+    <input type="submit" id="submit" value="Submit Data" />
+  </form>
+  
+</body>
+</html>
