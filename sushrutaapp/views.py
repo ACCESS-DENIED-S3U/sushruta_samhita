@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, auth
-from .models import Doctor_data, Users
+from .models import Doctor_data, Symptoms, Users
 from django.urls import reverse
 from django.contrib import messages
 
@@ -66,8 +66,15 @@ def login(request):
 
 def dreg2(request):
     old_post = request.session.get('_old_post')
-    if request.method=="POST":
+    if request.method == "POST":
+        Degree = request.POST['Degree']
+        newuser = Users.objects.get(user=request.user)
+        Doctor_data.objects.create(Users_D=newuser, Degree=Degree)
         return HttpResponse("get lost")
     print(old_post)
     return render(request, "templates/D-reg2.html")
 
+
+def pdash(request):
+    Symp = Symptoms.objects.all
+    return render(request, "templates/P-Dashboard.html", content={Symp: Symp})

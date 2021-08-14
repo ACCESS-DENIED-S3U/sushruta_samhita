@@ -17,5 +17,6 @@ class Doctor_data(models.Model):
     Degree = models.CharField(default='', max_length=50)
 
 
+
 class Symptoms(models.Model):
     symptom_name = models.CharField(default="",max_length=500)
