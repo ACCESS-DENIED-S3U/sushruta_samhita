@@ -33,10 +33,13 @@ margin-left: 10px;
     <label for="lastname">Lastname: - <input type="text" name="lastname" value=""></label><br />
     <label for="email">Email: - <input type="email" name="email" value=""></label><br />
     <label for="phone">Phone Number: - <input name="phone" maxlength="10" pattern="\d{10}"  class="form-control" type="text" title="You can enter only 10 digits..."  required /></label><br>
-   
+    <label for="Address">Address: - <input type="Address" name="Address" value=""></label><br />
     
-    <input type="radio" name="u_are" value="Patient" checked="checked">Student
-    <input type="radio" name="u are" value="Doctor">Teacher <br/><br>
+      <input type="radio" id="Doctor" name="u_are" value="Doctor">
+      <label for="Doctor">Doctor</label><br>
+      <input type="radio" id="Patient" name="u_are" value="Patient">
+      <label for="Patient">Patient</label><br>
+
     
 
 
