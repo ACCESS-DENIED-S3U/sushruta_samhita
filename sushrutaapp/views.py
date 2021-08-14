@@ -1,10 +1,25 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect, HttpResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, request
 from django.contrib.auth.models import User, auth
 from .models import Doctor_data, Symptoms, Users
 from django.urls import reverse
 from django.contrib import messages
+from django.core.mail import send_mail
+
+
+def mail():
+    Rid = request.Post['Rid']
+    Prescription = request.Post['Prescription']
+    Patient = Users.objects.get(Rid=Rid)
+    Patient_email = Patient.user.email
+    send_mail(
+        'Prescription',
+        Prescription,
+        'from@example.com',
+        [Patient_email],
+        fail_silently=False,
+    )
 
 
 def reg(request):
@@ -76,5 +91,5 @@ def dreg2(request):
 
 
 def pdash(request):
-    Symp = Symptoms.objects.all
-    return render(request, "templates/P-Dashboard.html", content={Symp: Symp})
+    Symp = Symptoms.objects.all()
+    return render(request, "templates/P-Dashboard.html", {"Symps": Symp})

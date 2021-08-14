@@ -15,10 +15,9 @@
 </head>
 <body>
   <select multiple id="select-state" placeholder="Pick a state...">
-
     <option value="">Select a state...</option>
-    {%for symp in symps%}
-    <option value="{{symp}}">{{symp}}</option>
+    {%for symp in Symps%}
+    <option value="{{symp}}">{{symp.symptom_name}}</option>
     {%  endfor  %}
   </select>
   <script>

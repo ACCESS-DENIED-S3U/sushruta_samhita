@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.fields.related import ForeignKey
-# Create your models here.
 
 
 class Users(models.Model):  # extended user model
@@ -15,8 +14,23 @@ class Users(models.Model):  # extended user model
 class Doctor_data(models.Model):
     Users_D = ForeignKey(Users, on_delete=models.CASCADE)
     Degree = models.CharField(default='', max_length=50)
+    # Speciality
+    # tag optinal
+    # ratings
+    isVerifired = models.BooleanField(default=True, blank=True)
 
+
+class Case(models.Model):
+    Users_P = ForeignKey(Users, on_delete=models.CASCADE)
+    # User foreign_key
+    # doctor fore_k
+    # Tags/Symptoms
+    # Discription
+    # age,weight,height
+    # isaccepted dafault false
+    # istreated
+    # pricription
 
 
 class Symptoms(models.Model):
-    symptom_name = models.CharField(default="",max_length=500)
+    symptom_name = models.CharField(default="", max_length=500)
