@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, auth
 from .models import Doctor_data, Users
 from django.urls import reverse
+from django.contrib import messages
 
 
 def reg(request):
@@ -37,8 +38,10 @@ def reg(request):
 
             ouruser.save()
             newuser.save()
+            auth.login(request, ouruser)
+            request.session['_old_post'] = request.POST
             if u_are == "Doctor":
-                return redirect(f"dreg2/{ouruser.username}")
+                return redirect("dreg2")
             else:
                 return render(request, 'templates/P-dashboard.html')
 
@@ -61,31 +64,10 @@ def login(request):
     return render(request, 'templates/login.html')
 
 
-def dreg2(request, username):
-    newuser = User.objects.get(username=username)
-    print(username)
-    # if request.method == 'POST':
-    #     data = request.POST
-    #     degree = data['degree']
-    #     newuser = User.objects.get(username=username)
-    #     doctor_user = Users.objects.get(user=newuser)
-    #     finaluser = Doctor_data.objects.create(
-    #         Users_E=doctor_user, Degree=degree)
-    #     return render(request, 'templates/dashboard.html')
-    # finaluser.save()
-    return render(request, 'templates/D-reg2.html')
-    # return HttpResponse(f'alpha {username}')
+def dreg2(request):
+    old_post = request.session.get('_old_post')
+    if request.method=="POST":
+        return HttpResponse("get lost")
+    print(old_post)
+    return render(request, "templates/D-reg2.html")
 
-
-def dreg23(request):
-    # user_obj = User.objects.get(user=request.user)
-    return HttpResponse(f'{request.user}')
-    # finaluser = Doctor_data.objects.create(
-    #     Users_E=doctor_user, Degree=degree)
-    # if request.method == 'POST':
-    #     data = request.POST
-    #     degree = data['degree']
-    #     finaluser = Doctor_data.objects.create(
-    #         Users_E=user_obj, Degree=degree)
-    #     return HttpResponse(f'alpha')
-    #     # return render(request, 'templates/dashboard.html')

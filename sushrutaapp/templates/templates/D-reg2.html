@@ -8,11 +8,10 @@
 <body>
     Hello Doctor!
     
-    <form class="" action='{% url "dreg23" %}' method="post">
-        {%csrf_token%}
-    <input type="Degree" placeholder="Degree" name="Dergee" />
-    <input type="submit" value="Submit" class="btn solid" />
+    <form class="" action='{% url "dreg2" %}' method="post">
+            {%csrf_token%}
+        <input type="Degree" placeholder="Degree" name="Degree" />
+        <input type="submit" value="Submit" class="btn solid" />
     </form>
-
 </body>
 </html>
