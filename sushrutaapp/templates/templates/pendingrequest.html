@@ -13,6 +13,15 @@
     <title>Doctor Dashboard</title>
   </head>
   <body>
+    {%for m in msg %}
+
+<div class="alert alert-warning" role="alert">
+  {{m}}
+</div>
+
+{% endfor %}
+
+
   <form action="{% url 'logout' %}" method="post">
       {% csrf_token %}
       <button type="submit"

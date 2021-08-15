@@ -18,7 +18,14 @@
   {{msg}}
   <form action="{% url 'logout' %}" method="post">
     {% csrf_token %}
-    <button type="submit" >Logout</button>
+    <button type="submit"
+    class="btn btn-danger" style="  
+   margin-top: 1px;
+   margin-right: 2px;
+   position:absolute;
+   top:0;
+   right:0;"
+    >Logout</button>
   </form>
   <div class="container-fluid">
     <div class="row main-row">

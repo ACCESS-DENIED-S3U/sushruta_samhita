@@ -21,7 +21,14 @@
     />
   </head>
   <body>
-  <h1>{{msg}}</h1>
+
+  {%for m in msg %}
+
+<div class="alert alert-warning" role="alert">
+  {{m}}
+</div>
+
+{% endfor %}
     <div id="bg"></div>
     <div class="page-container">
       <div class="login-container">

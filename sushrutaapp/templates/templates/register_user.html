@@ -22,9 +22,13 @@ margin-left: 10px;
   </style>
 </head>
 <body>
-  {%for msg in msg %}
-<h1>{{msg}}</h1>
-{%endfor%}
+  {%for m in msg %}
+
+  <div class="alert alert-warning" role="alert">
+    {{m}}
+  </div>
+  
+  {% endfor %}
   <form class="" action='{% url "register_user" %}' method="post">
     {% csrf_token %}
     <label for="registration_id">Reg ID:- <input type="text" name="registration_id" value=""></label><br />
