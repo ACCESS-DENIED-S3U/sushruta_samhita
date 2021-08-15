@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{% static 'css/commonregistration.css' %}" />
+  </head>
+  <body>
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <form action="#">
+          <h1>Login Here</h1>
+          <input
+            type="email"
+            placeholder="Username"
+            style="border-radius: 10px"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            style="border-radius: 10px"
+          />
+          <div class="wrapper-class">
+            <label>Doctor</label>
+            <input type="radio" id="doctor" name="person" />
+
+            <label>Patient</label>
+            <input type="radio" id="patient" name="person" />
+          </div>
+          <button>Sign In</button>
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form action="#">
+          <h1>REGISTRATION</h1>
+          <input
+            type="text"
+            placeholder="First Name"
+            style="border-radius: 10px"
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            style="border-radius: 10px"
+          />
+          <input
+            type="email"
+            placeholder="Email ID"
+            style="border-radius: 10px"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            style="border-radius: 10px"
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            style="border-radius: 10px"
+          />
+          <input
+            type="text"
+            placeholder="Phone No."
+            style="border-radius: 10px"
+          />
+          <input
+            type="text"
+            placeholder="Address"
+            style="border-radius: 10px"
+          />
+
+          <div class="wrapper-class">
+            <label>Doctor</label>
+            <input type="radio" id="doctor" name="person" />
+
+            <label>Patient</label>
+            <input type="radio" id="patient" name="person" />
+          </div>
+
+          <button>Sign Up</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>NOT HAVING ACCOUNT ?</h1>
+            <p>REGISTER HERE</p>
+            <button class="ghost" id="signIn">Register</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>ALREADY REGISTERED ?</h1>
+            <p>SIGN IN HERE</p>
+            <button class="ghost" id="signUp">SIGN IN</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'js/commonregistration.js' %}"></script>
+  </body>
+</html>
