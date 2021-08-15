@@ -10,9 +10,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/pendingrequest.css' %}">
     
-    <title>Docotor Dashboard</title>
+    <title>Doctor Dashboard</title>
   </head>
   <body>
+  <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit"
+      class="btn btn-primary" style="  
+     margin-top: 1px;
+     margin-right: 2px;
+     position:absolute;
+     top:0;
+     right:0;"
+      >Logout</button>
+    </form>
     <div class="container-fluid">
       <div class="row row-main justify-content-between">
         <div class="col-12 col-md-4 profile">
@@ -23,7 +34,7 @@
               Name
              </div>
              <div class="col-7">
-              Dr Vikas Dube
+              {{name}}
              </div>
            </div>
         
@@ -32,7 +43,7 @@
               Education
              </div>
              <div class="col-7">
-              MBBS MD
+              {{education}}
              </div>
            </div>
 
@@ -41,7 +52,7 @@
               Address
              </div>
              <div class="col-7">
-            Lorem ipsum dolor sit.
+            {{address}}
              </div>
            </div>
            <div class="row text-center">
@@ -49,7 +60,7 @@
              Email 
              </div>
              <div class="col-7">
-             dummy @ gmail.com
+             {{email}}
              </div>
            </div>
            <div class="row text-center">
@@ -57,7 +68,7 @@
               Mobile
              </div>
              <div class="col-7">
-              9834921293
+              {{mobile}}
              </div>
            </div>
 

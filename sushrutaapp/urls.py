@@ -1,11 +1,13 @@
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 
 
 urlpatterns = [
-    path('', views.reg, name='reg'),
-    path('dreg2', views.dreg2, name='dreg2'),
-    # path('dreg2/<str:username>', views.dreg2, name='dreg2'),
+    path('', views.register_user, name='register_user'),
     path('login', views.login, name='login'),
-    path('pdash', views.pdash, name='pdash'),
+    path('doctor_registration_phase2', views.doctor_registration_phase2, name='doctor_registration_phase2'),
+    path('patient_dashboard', views.patient_dashboard, name='patient_dashboard'),
+    path('doctor_dashboard', views.doctor_dashboard, name='doctor_dashboard'),
+    path('logout', views.logoutfunc, name='logout'),
+    path('pending_request', views.pending_request, name='pending_request')
 ]

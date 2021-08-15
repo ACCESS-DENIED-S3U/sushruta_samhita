@@ -7,78 +7,105 @@
     <link rel="stylesheet" href="{% static 'css/commonregistration.css' %}" />
   </head>
   <body>
+  <h1>{{msg}}</h1>
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <form action="#">
+        <form action="{% url 'login' %}" method="post">
+          {%csrf_token %}
           <h1>Login Here</h1>
           <input
-            type="email"
+            name="registration_id"
+            for="registration_id"
+            type="text"
             placeholder="Username"
             style="border-radius: 10px"
           />
           <input
+            name="password"
+            for="password"
             type="password"
             placeholder="Password"
             style="border-radius: 10px"
           />
           <div class="wrapper-class">
             <label>Doctor</label>
-            <input type="radio" id="doctor" name="person" />
+            <input type="radio" id="doctor" value="Doctor" name="designation" />
 
             <label>Patient</label>
-            <input type="radio" id="patient" name="person" />
+            <input
+              type="radio"
+              id="patient"
+              value="Patient"
+              name="designation"
+              checked
+            />
           </div>
           <button>Sign In</button>
         </form>
       </div>
       <div class="form-container sign-in-container">
-        <form action="#">
+        <form action="{% url 'register_user' %}" method="post">
+          {% csrf_token %}
           <h1>REGISTRATION</h1>
           <input
+          name="registration_id"
+          value=""
+          type="text"
+          placeholder="User Name"
+          style="border-radius: 10px"
+          />
+          <input
+            name="firstname"
+            value=""
             type="text"
-            placeholder="First Name"
+            placeholder="Full Name"
             style="border-radius: 10px"
           />
           <input
-            type="text"
-            placeholder="Last Name"
-            style="border-radius: 10px"
-          />
-          <input
+            name="email"
+            value=""
             type="email"
             placeholder="Email ID"
             style="border-radius: 10px"
           />
           <input
+          name="phone"
+          value=""
+          type="text"
+          placeholder="Phone No."
+          style="border-radius: 10px"
+          />
+          <input
+          name="address"
+          value=""
+          type="text"
+          placeholder="Address"
+          style="border-radius: 10px"
+          />
+          <input
+            name="password"
+            value=""
             type="password"
             placeholder="Password"
             style="border-radius: 10px"
           />
           <input
+            name="confirm_password"
+            value=""
             type="password"
             placeholder="Confirm Password"
-            style="border-radius: 10px"
-          />
-          <input
-            type="text"
-            placeholder="Phone No."
-            style="border-radius: 10px"
-          />
-          <input
-            type="text"
-            placeholder="Address"
             style="border-radius: 10px"
           />
 
           <div class="wrapper-class">
             <label>Doctor</label>
-            <input type="radio" id="doctor" name="person" />
+            <input type="radio" id="doctor" name="designation" value="Doctor"/>
 
             <label>Patient</label>
-            <input type="radio" id="patient" name="person" />
+            <input type="radio" id="patient" name="designation" value="Patient" checked/>
           </div>
 
-          <button>Sign Up</button>
+          <input type="submit" id="submit" value="Sign Up" />
         </form>
       </div>
       <div class="overlay-container">

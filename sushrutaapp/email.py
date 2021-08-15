@@ -6,15 +6,15 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 
 
-def send_review_email(username, email, prescription):
+def send_review_email(username, email, data):
 
     context = {
-        'name': username,
+        'username': username,
         'email': email,
-        'review': prescription,
+        'data': data,
     }
 
-    email_subject = 'Thank you for your review'
+    email_subject = 'Quick mail from Sushruta Samhita for your health and wealth'
     email_body = render_to_string('email_message.txt', context)
 
     email = EmailMessage(

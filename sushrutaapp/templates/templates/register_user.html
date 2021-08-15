@@ -25,19 +25,19 @@ margin-left: 10px;
   {%for msg in msg %}
 <h1>{{msg}}</h1>
 {%endfor%}
-  <form class="" action='{% url "reg" %}' method="post">
+  <form class="" action='{% url "register_user" %}' method="post">
     {% csrf_token %}
-    <label for="Rid">Reg ID:- <input type="text" name="Rid" value=""></label><br />
+    <label for="registration_id">Reg ID:- <input type="text" name="registration_id" value=""></label><br />
     <div id="message"></div><br>
     <label for="firstname">Firstname: - <input type="text" name="firstname" value=""></label><br />
     <label for="lastname">Lastname: - <input type="text" name="lastname" value=""></label><br />
     <label for="email">Email: - <input type="email" name="email" value=""></label><br />
     <label for="phone">Phone Number: - <input name="phone" maxlength="10" pattern="\d{10}"  class="form-control" type="text" title="You can enter only 10 digits..."  required /></label><br>
-    <label for="Address">Address: - <input type="Address" name="Address" value=""></label><br />
+    <label for="address">Address: - <input type="address" name="address" value=""></label><br />
     
-      <input type="radio" id="Doctor" name="u_are" value="Doctor">
+      <input type="radio" id="Doctor" name="designation" value="Doctor">
       <label for="Doctor">Doctor</label><br>
-      <input type="radio" id="Patient" name="u_are" value="Patient">
+      <input type="radio" id="Patient" name="designation" value="Patient">
       <label for="Patient">Patient</label><br>
 
     

@@ -12,84 +12,63 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
       <link rel="stylesheet" href="{% static 'css/sympform.css' %}">
-    <title>Hello, world!</title>
+    <title>Symptom Form</title>
   </head>
   <body>
+  {{msg}}
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" >Logout</button>
+  </form>
   <div class="container-fluid">
     <div class="row main-row">
         <div class="col-12 col-md-6 imgdiv">
-            <img class="docpat" src="{% static 'img/doc 4990224.jpg' %}" alt="" srcset="">
+            <img class="docpat" src="{% static 'img/4990224.jpg' %}" alt="" srcset="">
         </div>
         <div class="col-12 col-md-6 pb-4 formdiv">
           <div class="form-container">
-            <form>
+            <form action="{% url 'patient_dashboard' %}" method="post">
+            {% csrf_token %}
               <h1 class="text-center my-4">
                 CONSULT A DOCTOR
               </h1>
               <div class="form-floating mb-3">
-                <textarea rows="5" class="form-control textrow" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea name="description" rows="5" class="form-control textrow" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
                 <label for="floatingTextarea">Description</label>
               </div>
 
               <label for="symp">Symptoms</label>
-              <select multiple id="symp" placeholder="Pick a Symptoms...">
+              <select multiple name="symptoms" id="symp" placeholder="Pick a Symptoms...">
                 <option value="">Select a state...</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
+                {%for symptoms in symptoms_list%}
+                  <option value="{{symptoms}}">{{symptoms.symptom_name}}</option>
+                {% endfor %}
               </select>
 
 
               
               <div class="mb-3">
                 <label for="age" class="form-label">Age</label>
-                <input type="number" class="form-control" id="age" aria-describedby="emailHelp">
+                <input type="number" name="age" class="form-control" id="age" aria-describedby="emailHelp">
               </div>
               <div class="mb-3">
                 <label for="weight" class="form-label">Weight</label>
-                <input type="number" class="form-control" id="weight" aria-describedby="emailHelp">
+                <input type="number" name="weight" class="form-control" id="weight" aria-describedby="emailHelp">
               </div>
               <div class="mb-3">
                 <label for="height" class="form-label">height</label>
-                <input type="number" class="form-control" id="height" aria-describedby="emailHelp">
+                <input type="number" name="height" class="form-control" id="height" aria-describedby="emailHelp">
               </div>
-
+              {{doctors_list}}
               <label for="doc">Choose doctor</label>
-              <select  id="doc" placeholder="Pick a Doctor...">
+              <select  name="doctor_selected" id="doc" placeholder="Pick a Doctor...">
                 <option value="">Select a state...</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
+                {%for doctor in speciality_list %}
+                  <option value="{{doctor}}">{{doctor}}</option>
+                {% endfor %}
               </select>
 
-
-
-
-    
+   
               <button type="submit" class="btn btn-primary">Send to Doctor</button>
             </form>
           </div>

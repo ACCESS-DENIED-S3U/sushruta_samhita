@@ -7,9 +7,9 @@
 </head>
 <body>
     Hello Doctor!
-    <form class="" action='{% url "dreg2" %}' method="post">
+    <form class="" action='{% url "doctor_registration_phase2" %}' method="post">
             {%csrf_token%}
-        <input type="Degree" placeholder="Degree" name="Degree" />
+        <input type="degree" placeholder="degree" name="degree" />
         <input type="submit" value="Submit" class="btn solid" />
     </form>
 </body>

@@ -1,45 +1,68 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Doctor Registration</title>
-    <link rel="stylesheet" href="{% static 'css/doctorregistration.css' %}">
-</head>
-<body>
-
-    <div id="bg">
-        
-    </div>
+    <link rel="stylesheet" href="{% static 'css/doctorregistration.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+      integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+      integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg="
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+  <h1>{{msg}}</h1>
+    <div id="bg"></div>
     <div class="page-container">
-        <div class="login-container">
-            <div class="form-header">
-                
-                <div class="login-txt">
-                    Fill Your Info
-                </div> 
-                <div class="dark-side">
-
-                </div>  
-            </div>
-
-           
-                  <form action="">
-                    <div class="form-body">
-                        
-                     <input type="text" name="degree" id="degree" placeholder="Degree">
-                     <input type="text" name="lno" id="lno" placeholder="License No.">
-                     <input type="text" name="specialty" id="specialty" placeholder="Specialty">
-                     <input type="text" name="tag" id="tag" placeholder="Tags">
-
-
-                     <input type="button" value="Login">
-                    </div>
-
-            
+      <div class="login-container">
+        <div class="form-header">
+          <div class="login-txt">Fill Your Info</div>
+          <div class="dark-side"></div>
         </div>
+
+        <form action="{% url 'doctor_registration_phase2'%}" method="post">
+            {% csrf_token %}
+          <div class="form-body">
+            <input type="text" name="degree" id="degree" placeholder="Degree" />
+            <input
+              type="text"
+              id="lno"
+              name="license_no"
+              placeholder="License No."
+            />
+            <input
+              type="text"
+              name="speciality"
+              id="specialty"
+              placeholder="Speciality"
+            />
+            <select multiple id="select-state" name="tags" placeholder="Choose Symptoms which you can cure (Any five)">
+              <option value="">Select a state...</option>
+              {%for symptoms in symptoms_list%}
+                <option value="{{symptoms}}">{{symptoms.symptom_name}}</option>
+              {% endfor %}
+            </select>
+            <input type="submit" value="Login" />
+          </div>
+        </form>
+      </div>
     </div>
-</body>
+    <script>
+      $(document).ready(function () {
+        $("select").selectize({
+          sortField: "text",
+        });
+      });
+    </script>
+  </body>
 </html>
