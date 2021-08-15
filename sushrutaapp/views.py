@@ -6,6 +6,7 @@ from .models import Doctor_data, Symptoms, Users
 from django.urls import reverse
 from django.contrib import messages
 from django.core.mail import send_mail
+from .tasks import send_review_email_task
 
 
 def mail():
@@ -93,3 +94,7 @@ def dreg2(request):
 def pdash(request):
     Symp = Symptoms.objects.all()
     return render(request, "templates/P-Dashboard.html", {"Symps": Symp})
+
+
+def send_email(username,email,prescription):
+    send_review_email_task.delay(username,email,prescription)
