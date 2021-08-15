@@ -18,6 +18,7 @@ def checkFullname(fullName):
             break
     return setbool
 
+
 def checkLicense(license_no):
     setbool = True
     for name in license_no.split():
@@ -25,6 +26,7 @@ def checkLicense(license_no):
             setbool = False
             break
     return setbool
+
 
 def register_user(request):
     if request.user.is_authenticated:
@@ -51,14 +53,17 @@ def register_user(request):
         if len(password) == 0:
             return render(request, register_user_page_path, {'msg': ["Please enter password"]})
         try:
-            ouruser = User.objects.create_user(username=registration_id, first_name=firstname,last_name=lastname, email=email, password=password)
-            Users.objects.create(user=ouruser, phone=phone, address=address, designation=designation)
+            ouruser = User.objects.create_user(
+                username=registration_id, first_name=firstname, last_name=lastname, email=email, password=password)
+            Users.objects.create(user=ouruser, phone=phone,
+                                 address=address, designation=designation)
             ouruser.save()
 
             auth.login(request, ouruser)
             request.session['base_user_register_post'] = request.POST
             request.session["login_user_data"] = request.POST
-            send_email(ouruser.username, email, "hey you have registered successfully")
+            send_email(ouruser.username, email,
+                       "hey you have registered successfully")
             if designation == "Doctor":
                 return redirect("doctor_registration_phase2")
             else:
@@ -73,24 +78,24 @@ def login(request):
     if request.user.is_authenticated:
         data = request.session.get("login_user_data")
         if data:
-            user_object = User.objects.get(username=data.get('registration_id'))
+            user_object = User.objects.get(
+                username=data.get('registration_id'))
             prev_object = Users.objects.get(user=user_object)
             if prev_object.designation == "Doctor":
                 return redirect("doctor_dashboard")
             else:
                 return redirect("patient_dashboard")
-    
 
     if request.method == 'POST':
         data = request.POST
-        registration_id  = data['registration_id']
+        registration_id = data['registration_id']
         password = data['password']
         designation = data['designation']
         user = auth.authenticate(username=registration_id, password=password)
-        
+
         if user is not None:
             custom_user_object = Users.objects.get(user=user)
-            if not str(designation)==custom_user_object.designation:
+            if not str(designation) == custom_user_object.designation:
                 return render(request, login_page_path, {'msg': f'No {designation} with this credentials!'})
             request.session["login_user_data"] = request.POST
             auth.login(request, user)
@@ -104,7 +109,7 @@ def login(request):
 
 def doctor_registration_phase2(request):
     doctor_registration_page_path = "templates/doctorregistration.html"
-    base_user_register_post = request.session.get('base_user_register_post')        
+    base_user_register_post = request.session.get('base_user_register_post')
     registration_id = base_user_register_post.get('registration_id')
     symptoms_list = Symptoms.objects.all()
     if request.method == "POST":
@@ -126,14 +131,15 @@ def doctor_registration_phase2(request):
         any_user = Users.objects.get(user=base_user)
         request.session['doctor_user_register_post'] = request.POST
         try:
-            Doctor_data.objects.create(Users_D=any_user, degree=str(degree), license_no=str(license_no), speciality=str(speciality), tags=tags)
+            Doctor_data.objects.create(Users_D=any_user, degree=str(
+                degree), license_no=str(license_no), speciality=str(speciality), tags=tags)
             return redirect("doctor_dashboard")
         except IntegrityError as ie:
             return render(request, doctor_registration_page_path, {'msg': f"License number Already Exists..!"})
         except Exception as e:
             return render(request, doctor_registration_page_path, {'msg': f"User creation problem occured..!"})
     # print(base_user_register_post)
-    return render(request, doctor_registration_page_path, {'symptoms_list':symptoms_list})
+    return render(request, doctor_registration_page_path, {'symptoms_list': symptoms_list})
 
 
 def patient_dashboard(request):
@@ -155,22 +161,28 @@ def patient_dashboard(request):
         weight = data.get('weight')
         height = data.get('height')
         doctor_selected_username = data.get('doctor_selected').split('|')[1]
-        doctor_selected = Doctor_data.objects.get(Users_D__user__username=doctor_selected_username)
+        doctor_selected = Doctor_data.objects.get(
+            Users_D__user__username=doctor_selected_username)
         print(doctor_selected)
         Case.objects.create(user_patient=user_patient_fk, user_doctor_fk=doctor_selected,
-        tags=symptoms,description=description,weight=weight,height=height)
-        return render(request, patient_registration_page_path, {"symptoms_list": symptoms_list, "speciality_list" : speciality_list, "msg":"You have successfully registered..!!"})
+                            tags=symptoms, description=description, weight=weight, height=height)
+        return render(request, patient_registration_page_path, {"symptoms_list": symptoms_list, "speciality_list": speciality_list, "msg": "You have successfully registered..!!"})
 
-    return render(request, patient_registration_page_path, {"symptoms_list": symptoms_list, "speciality_list" : speciality_list})
+    return render(request, patient_registration_page_path, {"symptoms_list": symptoms_list, "speciality_list": speciality_list})
+
 
 def doctor_dashboard(request):
     patient_registration_page_path = "templates/doctordashboard.html"
-    doctor_user_register_post = request.session.get('doctor_user_register_post')
+    doctor_user_register_post = request.session.get(
+        'doctor_user_register_post')
     base_doctor_register_post = request.session.get('base_user_register_post')
-    login_doctor_data_username = request.session.get('login_user_data').get('registration_id')
-    elevated_doctor = Users.objects.get(user__username=login_doctor_data_username)
+    login_doctor_data_username = request.session.get(
+        'login_user_data').get('registration_id')
+    elevated_doctor = Users.objects.get(
+        user__username=login_doctor_data_username)
     base_user = User.objects.get(username=login_doctor_data_username)
-    pro_elevated_doctor = Doctor_data.objects.get(Users_D__user__username=login_doctor_data_username)
+    pro_elevated_doctor = Doctor_data.objects.get(
+        Users_D__user__username=login_doctor_data_username)
     try:
         name = base_doctor_register_post.get('firstname')
     except:
@@ -191,33 +203,44 @@ def doctor_dashboard(request):
         phone = base_doctor_register_post.get('phone')
     except:
         phone = elevated_doctor.phone
-    
+
     context = {
-        'name' : name,
-        'education' : education,
-        'address' : address,
-        'email' : email,
-        'mobile' : phone,
+        'name': name,
+        'education': education,
+        'address': address,
+        'email': email,
+        'mobile': phone,
     }
     return render(request, patient_registration_page_path, context)
 
 
 def pending_request(request):
     pending_request_page_path = 'templates/pendingrequest.html'
-    doctor_user_register_post = request.session.get('doctor_user_register_post')
+    doctor_user_register_post = request.session.get(
+        'doctor_user_register_post')
     base_doctor_register_post = request.session.get('base_user_register_post')
     context = {
-        'name' : base_doctor_register_post.get('firstname'),
-        'education' : doctor_user_register_post.get('degree'),
-        'address' : base_doctor_register_post.get('address'),
-        'email' : base_doctor_register_post.get('email'),
-        'mobile' : base_doctor_register_post.get('phone'),
+        'name': base_doctor_register_post.get('firstname'),
+        'education': doctor_user_register_post.get('degree'),
+        'address': base_doctor_register_post.get('address'),
+        'email': base_doctor_register_post.get('email'),
+        'mobile': base_doctor_register_post.get('phone'),
     }
     return render(request, pending_request_page_path, context)
+
 
 def send_email(username, email, data):
     send_review_email_task.delay(username, email, data)
 
+
 def logoutfunc(request):
     auth.logout(request)
     return redirect('register_user')
+
+
+def canva(request):
+    return render(request, "templates/Pencil.html")
+
+
+def whiteboard(request):
+    return render(request, "templates/Drag_droop.html")

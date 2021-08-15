@@ -1,0 +1,138 @@
+{% load static %}
+<html>
+<head>
+<meta charset="utf-8">
+<title>Drawing App</title>
+<link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css" media="screen" title="no title">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+<style>
+canvas {
+    background: #fff;
+    background: url("{% static 'img/nose2.jpg'%}") no-repeat center;
+    background-size: 50%;
+    display: block;
+    margin: 40px auto 10px;
+    border-radius: 5px;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 4px 0 0 #e0e0e0;
+    
+  }
+  </style>
+<h2>{ BODY PART NAME }</h2>
+<canvas	 width="1000" height="350"    id="mainCanvas"></canvas>
+
+<div class="controls">
+	<ul>
+		<li class="red selected"></li>
+		<li class="blue"></li>
+		<li class="yellow"></li>
+	</ul>
+	<button id="clear" onclick='clear_canvas_width ()'>Clear Canvas</button>
+	<button id="revealColorSelect">New Colour</button>
+	<div id="colorSelect">
+		<span id="newColor"></span>
+		<div class="sliders">
+			<p>
+				<label for="red">Red</label>
+				<input id="red" name="red" type="range" min=0 max=255 value=0>
+			</p>
+			<p>
+				<label for="green">Green</label>
+				<input id="green" name="green" type="range" min=0 max=255 value=0>
+			</p>
+            
+			<p>
+				<label for="blue">Blue</label>
+				<input id="blue" name="blue" type="range" min=0 max=255 value=0>
+			</p>
+		</div>
+		<div>
+			<button id="addNewColor">Add Colour</button>
+		</div>
+	</div>
+</div>
+<!-- <script src="js/app.js" type="text/javascript" charset="utf-8"></script> -->
+<script>var colour = $(".selected").css("background-color");
+    var $canvas = $("canvas");
+    var context = $canvas[0].getContext("2d");
+    var lastEvent;
+    var mouseDown = false;
+    
+    // When clicking on colours items
+    $(".controls").on("click", "li", function () {
+        //  Deselect aibling elements
+        $(this).siblings().removeClass("selected");
+        //  Select clicked element
+        $(this).addClass("selected");
+    
+        // Cache current colour
+        colour = $(this).css("background-color");
+    
+    });
+    
+    
+    // When New colour is pressed by user
+    $("#revealColorSelect").click(function () {
+        // Show colour select or hide the color select
+        changeColor();
+        $("#colorSelect").toggle();
+    });
+    
+    // Update the new colour span
+    function changeColor() {
+        var r = $("#red").val();
+        var g = $("#green").val();
+        var b = $("#blue").val();
+        $("#newColor").css("background-color", "rgb(" + r + "," + g + "," + b + ")");
+    }
+    
+    // When new colour sliders change
+    $("input[type=range]").change(changeColor);
+    
+    
+    // When add colour is pressed
+    $("#addNewColor").click(function () {
+        // Append the colours to the controls
+        var $newColor = $("<li></li>");
+        $newColor.css("background-color", $("#newColor").css("background-color"));
+        $(".controls ul").append($newColor);
+        // Select the new added colour
+        $newColor.click();
+    });
+    
+    // On mouse events on the canvas
+    $canvas.mousedown(function (e) {
+        lastEvent = e;
+        mouseDown = true;
+    }).mousemove(function (e) {
+        // Draw lines
+        if (mouseDown) {
+            context.beginPath();
+            context.moveTo(lastEvent.offsetX, lastEvent.offsetY);
+            context.lineTo(e.offsetX, e.offsetY);
+            context.strokeStyle = colour;
+            context.lineWidth = 5;
+            context.lineCap = 'round';
+            context.stroke();
+            lastEvent = e;
+        }
+    }).mouseup(function () {
+        mouseDown = false;
+    }).mouseleave(function () {
+        $canvas.mouseup();
+    });
+    
+    // Clear the canvas when button is clicked
+    function clear_canvas_width() {
+        var s = document.getElementById("mainCanvas");
+        var w = s.width;
+        s.width = 10;
+        s.width = w;
+    }</script>
+</body>
+</html>
