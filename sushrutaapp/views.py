@@ -103,6 +103,8 @@ def login(request):
 
 
 def doctor_registration_phase2(request):
+    if not request.user.is_authenticated:
+        return redirect('register_user')
     doctor_registration_page_path = "templates/doctorregistration.html"
     base_user_register_post = request.session.get('base_user_register_post')        
     registration_id = base_user_register_post.get('registration_id')
@@ -131,13 +133,14 @@ def doctor_registration_phase2(request):
         except IntegrityError as ie:
             return render(request, doctor_registration_page_path, {'msg': f"License number Already Exists..!"})
         except Exception as e:
-            return render(request, doctor_registration_page_path, {'msg': f"User creation problem occured..!"})
+            return render(request, doctor_registration_page_path, {'msg': f"User creation problem occurred..!"})
     # print(base_user_register_post)
     return render(request, doctor_registration_page_path, {'symptoms_list':symptoms_list})
 
 
 def patient_dashboard(request):
-    print(request.user)
+    if not request.user.is_authenticated:
+        return redirect('register_user')
     patient_registration_page_path = "templates/sympform.html"
     symptoms_list = Symptoms.objects.all()
     doctors_list = Users.objects.filter(designation="Doctor")
@@ -171,6 +174,13 @@ def doctor_dashboard(request):
     elevated_doctor = Users.objects.get(user__username=login_doctor_data_username)
     base_user = User.objects.get(username=login_doctor_data_username)
     pro_elevated_doctor = Doctor_data.objects.get(Users_D__user__username=login_doctor_data_username)
+    cases = Case.objects.filter(user_doctor_fk=pro_elevated_doctor)
+    print(cases)
+    index = 0
+    case_user_list = []
+    for case in cases:
+        index+=1
+        case_user_list.append({'index':index, 'name' : case.user_patient.user.first_name, 'date' : case.date_meeting, 'status' : case.is_treated})
     try:
         name = base_doctor_register_post.get('firstname')
     except:
@@ -198,6 +208,7 @@ def doctor_dashboard(request):
         'address' : address,
         'email' : email,
         'mobile' : phone,
+        'case_user_list' : case_user_list
     }
     return render(request, patient_registration_page_path, context)
 
@@ -206,17 +217,98 @@ def pending_request(request):
     pending_request_page_path = 'templates/pendingrequest.html'
     doctor_user_register_post = request.session.get('doctor_user_register_post')
     base_doctor_register_post = request.session.get('base_user_register_post')
+    login_doctor_data_username = request.session.get('login_user_data').get('registration_id')
+    elevated_doctor = Users.objects.get(user__username=login_doctor_data_username)
+    base_user = User.objects.get(username=login_doctor_data_username)
+    pro_elevated_doctor = Doctor_data.objects.get(Users_D__user__username=login_doctor_data_username)
+    cases = Case.objects.filter(user_doctor_fk=pro_elevated_doctor)
+    pending_request = cases.filter(is_treated=False).filter(is_accepted=False)
+    treated_users = cases.filter(is_accepted=True).filter(is_treated=False)
+    index = 0
+    pending_user_list = []
+    treated_user_list = []
+    for case in pending_request:
+        index+=1
+        pending_user_list.append({
+        'index':index, 
+        'username':case.user_patient.user.username,
+        'phone':case.user_patient.phone,
+        'name' : case.user_patient.user.first_name, 
+        'transcript' : f"Age : {case.age} years \n Weight : {case.weight} kg \n Height : {case.height}cm \n Description : {case.description}", 
+        'status' : case.is_treated})
+    index = 0
+    for treated_user in treated_users:
+        index+=1
+        treated_user_list.append({
+        'index':index, 
+        'username':treated_user.user_patient.user.username,
+        'phone':treated_user.user_patient.phone,
+        'name' : treated_user.user_patient.user.first_name})
+
+    try:
+        name = base_doctor_register_post.get('firstname')
+    except:
+        name = base_user.first_name
+    try:
+        education = base_doctor_register_post.get('degree')
+    except:
+        education = pro_elevated_doctor.degree
+    try:
+        address = base_doctor_register_post.get('address')
+    except:
+        address = elevated_doctor.address
+    try:
+        email = base_doctor_register_post.get('email')
+    except:
+        email = base_user.email
+    try:
+        phone = base_doctor_register_post.get('phone')
+    except:
+        phone = elevated_doctor.phone
+    
     context = {
-        'name' : base_doctor_register_post.get('firstname'),
-        'education' : doctor_user_register_post.get('degree'),
-        'address' : base_doctor_register_post.get('address'),
-        'email' : base_doctor_register_post.get('email'),
-        'mobile' : base_doctor_register_post.get('phone'),
+        'name' : name,
+        'education' : education,
+        'address' : address,
+        'email' : email,
+        'mobile' : phone,
+        'pending_user_list':pending_user_list,
+        'treated_user_list' : treated_user_list
     }
+
+    if request.method == 'POST':
+        data = request.POST
+        meet_time = str(data['meetdatetime'])
+        meetlink = str(data['meetlink'])
+        submit_value = str(data['submit'])
+        fetch_user = Users.objects.get(user__username=submit_value)
+        case = Case.objects.get(user_patient=fetch_user)
+        case.is_accepted=True
+        case.save()
+        send_email(fetch_user.user.first_name, fetch_user.user.email, 
+        f"The meeting Time is : {meet_time}\n Link : {meetlink}")
+        return redirect('pending_request')
+
     return render(request, pending_request_page_path, context)
+
+
+def prescription_request(request):
+    data = request.POST
+    prescription = str(data['prescription'])
+    submit_value = str(data['submit'])
+    fetch_user = Users.objects.get(user__username=submit_value)
+    case = Case.objects.get(user_patient=fetch_user)
+    case.is_treated=True
+    case.is_accepted=True
+    case.save()
+    send_email(fetch_user.user.first_name, fetch_user.user.email, 
+        f"Prescription : {prescription}")
+    return redirect('pending_request')
+
 
 def send_email(username, email, data):
     send_review_email_task.delay(username, email, data)
+
 
 def logoutfunc(request):
     auth.logout(request)

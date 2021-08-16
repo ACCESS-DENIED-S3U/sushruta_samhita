@@ -1,5 +1,4 @@
 Hello {{username|safe}}
-Here is a copy of your review:
 {{data|safe}}
 
 

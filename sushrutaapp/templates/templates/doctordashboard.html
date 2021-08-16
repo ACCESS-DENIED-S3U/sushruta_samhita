@@ -20,21 +20,24 @@
   <body>
     {%for m in msg %}
 
-<div class="alert alert-warning" role="alert">
-  {{m}}
-</div>
+    <div class="alert alert-warning" role="alert">{{m}}</div>
 
-{% endfor %}
+    {% endfor %}
     <form action="{% url 'logout' %}" method="post">
       {% csrf_token %}
-      <button type="submit"
-      class="btn btn-danger" style="  
-     margin-top: 1px;
-     margin-right: 2px;
-     position:absolute;
-     top:0;
-     right:0;"
-      >Logout</button>
+      <button
+        type="submit"
+        class="btn btn-danger"
+        style="
+          margin-top: 1px;
+          margin-right: 2px;
+          position: absolute;
+          top: 0;
+          right: 0;
+        "
+      >
+        Logout
+      </button>
     </form>
     <div class="container-fluid">
       <div class="row row-main justify-content-between">
@@ -116,100 +119,18 @@
                   <th scope="col">No</th>
                   <th scope="col">Name</th>
                   <th scope="col">Date and time</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">Treated</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Lorem, ipsum dolor.</td>
-                  <td>25/55/5555 45.54 pm</td>
-                  <td>Cured</td>
-                </tr>
+                {% for case in case_user_list %}
+                  <tr>
+                    <th scope="row">{{ case.index }}</th>
+                      <td>{{ case.name }}</td>
+                      <td>{{ case.date }}</td>
+                      <td>{{ case.status }}</td>
+                  </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>

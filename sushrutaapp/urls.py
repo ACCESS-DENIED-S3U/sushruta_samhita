@@ -9,5 +9,6 @@ urlpatterns = [
     path('patient_dashboard', views.patient_dashboard, name='patient_dashboard'),
     path('doctor_dashboard', views.doctor_dashboard, name='doctor_dashboard'),
     path('logout', views.logoutfunc, name='logout'),
-    path('pending_request', views.pending_request, name='pending_request')
+    path('pending_request', views.pending_request, name='pending_request'),
+    path('prescripton_request', views.prescription_request, name='prescription_request')
 ]

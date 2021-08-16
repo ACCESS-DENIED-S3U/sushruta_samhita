@@ -31,6 +31,7 @@ class Case(models.Model):
     user_doctor_fk = ForeignKey(Doctor_data, on_delete=models.CASCADE, null=True)
     tags = models.CharField(default='[]', max_length=500)
     description = models.TextField(default="", max_length=1000)
+    date_meeting = models.DateTimeField(auto_now_add=True,null=True)
     age = models.IntegerField(default=0)
     weight = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
