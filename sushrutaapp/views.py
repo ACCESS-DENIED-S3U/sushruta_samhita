@@ -321,7 +321,9 @@ def prescription_request(request):
         f"Prescription : {prescription}")
     return redirect('pending_request')
 
-
+def index_pagerequest(request):
+    index_page_path = 'templates/index.html'
+    return render(request, index_page_path)
 def send_email(username, email, data):
     send_review_email_task.delay(username, email, data)
 

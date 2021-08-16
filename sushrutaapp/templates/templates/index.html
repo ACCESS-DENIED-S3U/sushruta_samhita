@@ -42,7 +42,7 @@
       rel="stylesheet"
     />
     <link
-      href="assets/vendor/glightbox/css/glightbox.min.css {% static 'css/doctordashboard.css' %}"
+      href="{% static 'vendor/glightbox/css/glightbox.min.css' %}"
       rel="stylesheet"
     />
     <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet" />
@@ -75,11 +75,8 @@
         </nav>
         <!-- .navbar -->
 
-        <a href="#appointment" class="appointment-btn scrollto"
-          ><span class="d-none d-md-inline"></span>Register</a
-        >
-        <a href="#appointment" class="appointment-btn scrollto"
-          ><span class="d-none d-md-inline"></span>Sign-In</a
+        <a href="{% url 'register_user' %}" class="appointment-btn scrollto"
+          ><span class="d-none d-md-inline"></span>Register / Sign-In</a
         >
       </div>
     </header>
@@ -793,11 +790,11 @@
     ></a>
 
     <!-- Vendor JS Files -->
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js %}"></script>
-    <script src="{% static 'vendor/glightbox/js/glightbox.min.js %}"></script>
-    <script src="{% static 'vendor/php-email-form/validate.js %}"></script>
-    <script src="{% static 'vendor/purecounter/purecounter.js %}"></script>
-    <script src="{% static 'vendor/swiper/swiper-bundle.min.js %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'vendor/purecounter/purecounter.js' %}"></script>
+    <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
 
     <!-- Template Main JS File -->
     <script src="{% static 'js/landing.js' %}"></script>
