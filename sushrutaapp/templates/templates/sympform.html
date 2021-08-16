@@ -15,7 +15,11 @@
     <title>Symptom Form</title>
   </head>
   <body>
-  {{msg}}
+  {% if msg %}
+    <div class="alert alert-success" role="alert">
+      {{msg}}
+    </div>
+    {% endif %}
   <form action="{% url 'logout' %}" method="post">
     {% csrf_token %}
     <button type="submit"
