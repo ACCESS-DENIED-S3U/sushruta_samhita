@@ -29,10 +29,11 @@ def checkLicense(license_no):
 
 
 def register_user(request):
-    if request.user.is_authenticated:
-        return redirect("login")
+    
     register_user_page_path = 'templates/commonregistration.html'
     if request.method == 'POST':
+        if request.user.is_authenticated:
+            return redirect("login")
         data = request.POST
         registration_id = data['registration_id']
         firstname = data['firstname']
