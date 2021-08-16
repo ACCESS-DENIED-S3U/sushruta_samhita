@@ -208,7 +208,7 @@ def doctor_dashboard(request):
         'address' : address,
         'email' : email,
         'mobile' : phone,
-        'case_user_list' : case_user_list
+        'case_user_list' : case_user_list[::-1]
     }
     return render(request, patient_registration_page_path, context)
 
