@@ -11,7 +11,7 @@
 <style>
 canvas {
     background: #fff;
-    background: url("{% static 'img/nose2.jpg'%}") no-repeat center;
+    background: url("{{url}}") no-repeat center;
     background-size: 50%;
     display: block;
     margin: 40px auto 10px;
@@ -24,8 +24,7 @@ canvas {
   }
   </style>
 <h2>{ BODY PART NAME }</h2>
-<canvas	 width="1000" height="350"    id="mainCanvas"></canvas>
-
+<canvas	 width="1000" height="350" id="mainCanvas"></canvas>
 <div class="controls">
 	<ul>
 		<li class="red selected"></li>

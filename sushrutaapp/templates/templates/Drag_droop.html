@@ -2,15 +2,21 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      charset="utf-8"
+    ></script>
   </head>
   <body>
-
-    <input type="checkbox" id="check">
+  
+    <input type="checkbox" id="check" />
     <!--header area start-->
     <header>
       <label for="check">
@@ -20,14 +26,18 @@
         <h3>Sushruta <span>Inphase</span></h3>
       </div>
       <div class="right_area">
-        <a href="#" class="logout_btn">Logout</a>
+        <a href="{% url 'logout'%}" class="logout_btn">Logout</a>
       </div>
     </header>
     <!--header area end-->
     <!--mobile navigation bar start-->
     <div class="mobile_nav">
       <div class="nav_bar">
-        <img src="{% static 'img/image-logo.png' %}" class="mobile_profile_image" alt="">
+        <img
+          src="{% static 'img/image-logo.png' %}"
+          class="mobile_profile_image"
+          alt=""
+        />
         <i class="fa fa-bars nav_btn"></i>
       </div>
       <div class="mobile_nav_items">
@@ -43,7 +53,11 @@
     <!--sidebar start-->
     <div class="sidebar">
       <div class="profile_info">
-        <img src="{% static 'img/image-logo.png' %}" class="profile_image" alt="">
+        <img
+          src="{% static 'img/image-logo.png' %}"
+          class="profile_image"
+          alt=""
+        />
         <h4>Sushruta</h4>
       </div>
       <a href="#"><i class="fas fa-desktop"></i><span>Lungs</span></a>
@@ -57,34 +71,35 @@
 
     <div class="content">
       <div class="card">
-        <a href='{% url "canva" %}'>
-        <img src="{% static 'img/nose2.jpg' %}" alt="">
-      </a>
-          <a href='{% url "canva" %}'>
-          <img src="{% static 'img/nose2.jpg' %}" alt="">
-        </a>
-          <a href='{% url "canva" %}'>
-          <img src="{% static 'img/nose2.jpg' %}" alt="">
-        </a>
-        </div>
+        <form action="{% url 'canva' %}" method="post">
+          {%csrf_token%}
+          <button name="image" value="{% static 'img/nose2.jpg' %}" type="submit">
+          <img name="image" value="{% static 'img/nose2.jpg' %}" src="{% static 'img/nose2.jpg' %}" alt="" />
+          </button>
+        </form>
+
+        <form action="{% url 'canva' %}" method="post">
+          {%csrf_token%}
+          <button name="image" value="{% static 'img/nose2.jpg' %}" type="submit">
+          <img name="image" value="{% static 'img/nose2.jpg' %}" src="{% static 'img/nose2.jpg' %}" alt="" />
+          </button>
+        </form>
+
+        <form action="{% url 'canva' %}" method="post">
+          {%csrf_token%}
+          <button name="image" value="{% static 'img/nose2.jpg' %}" type="submit">
+          <img name="image" value="{% static 'img/nose2.jpg' %}" src="{% static 'img/nose2.jpg' %}" alt="" />
+          </button>
+        </form>
+      </div>
     </div>
 
     <script type="text/javascript">
-    $(document).ready(function(){
-      $('.nav_btn').click(function(){
-        $('.mobile_nav_items').toggleClass('active');
+      $(document).ready(function () {
+        $(".nav_btn").click(function () {
+          $(".mobile_nav_items").toggleClass("active");
+        });
       });
-    });
-  </script>
-    <script type="text/javascript">
-    function image(img) {
-    var src = img.src;
-    window.open(src);
-}
-
     </script>
-    
-
   </body>
 </html>
-      

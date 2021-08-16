@@ -175,6 +175,8 @@ def patient_dashboard(request):
 
 
 def doctor_dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect('register_user')
     patient_registration_page_path = "templates/doctordashboard.html"
     doctor_user_register_post = request.session.get(
         'doctor_user_register_post')
@@ -225,6 +227,8 @@ def doctor_dashboard(request):
 
 
 def pending_request(request):
+    if not request.user.is_authenticated:
+        return redirect('register_user')
     pending_request_page_path = 'templates/pendingrequest.html'
     doctor_user_register_post = request.session.get(
         'doctor_user_register_post')
@@ -328,8 +332,13 @@ def logoutfunc(request):
 
 
 def canva(request):
-    return render(request, "templates/Pencil.html")
+    if not request.user.is_authenticated:
+        return redirect('register_user')
+    url = request.POST['image']
+    return render(request, "templates/Pencil.html",{'url' : url})
 
 
 def whiteboard(request):
+    if not request.user.is_authenticated:
+        return redirect('register_user')
     return render(request, "templates/Drag_droop.html")
