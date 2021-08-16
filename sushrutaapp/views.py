@@ -297,7 +297,7 @@ def prescription_request(request):
     prescription = str(data['prescription'])
     submit_value = str(data['submit'])
     fetch_user = Users.objects.get(user__username=submit_value)
-    case = Case.objects.get(user_patient=fetch_user)
+    case = Case.objects.filter(user_patient=fetch_user).first()
     case.is_treated=True
     case.is_accepted=True
     case.save()
