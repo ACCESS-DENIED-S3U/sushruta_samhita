@@ -11,4 +11,6 @@ urlpatterns = [
     path('logout', views.logoutfunc, name='logout'),
     path('pending_request', views.pending_request, name='pending_request'),
     path('prescripton_request', views.prescription_request, name='prescription_request'),
+    path('canva', views.canva, name='canva'),
+    path('whiteboard', views.whiteboard, name='whiteboard'),
 ]
