@@ -8,6 +8,8 @@ body {
 
 body {
   background: #c61951;
+  background: -webkit-linear-gradient(to right, #417dff, #ff416c);
+  background: linear-gradient(to right, #417dff, #ff416c);
   font-family: Montserrat;
   color: #f8f7aa;
 }
