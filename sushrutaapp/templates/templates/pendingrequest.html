@@ -33,7 +33,16 @@
      right:0;"
       >Logout</button>
     </form>
-    <button href="{% url 'whiteboard' %}">Go to Whiteboard</button>
+    
+<a href="{% url 'whiteboard' %}">
+    <button class="btn btn-success" 
+    style="  
+    margin-top: 1px;
+    margin-left: 2px;
+    position:absolute;
+    top:0;
+    left:0;">Go to Whiteboard</button></a>
+    
     <div class="container-fluid">
       <div class="row row-main justify-content-between">
         <div class="col-12 col-md-4 profile">

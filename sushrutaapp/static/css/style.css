@@ -345,7 +345,7 @@ ul li {
 /* BUTTON STYLES
 ==============*/
 
-button {
+.controls button {
   background: #68b25b;
   box-shadow: 0 3px 0 0 #6a845f;
   color: #fff;
